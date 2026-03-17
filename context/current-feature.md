@@ -16,4 +16,5 @@
 
 ## History
 
-<!-- Keep this updated. Earliest to latest -->
+
+- **2026-03-17** - Initial Next.js and Tailwind CSS setup (Next.js 16, TypeScript, Tailwind v4)
