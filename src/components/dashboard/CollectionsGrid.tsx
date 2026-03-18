@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   Code,
@@ -11,7 +9,7 @@ import {
   Link as LinkIcon,
   Star,
 } from "lucide-react";
-import { collections, items, itemTypes } from "@/lib/mock-data";
+import { getRecentCollections } from "@/lib/db/collections";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Code,
@@ -23,40 +21,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Link: LinkIcon,
 };
 
-function getDominantType(collectionItemIds: string[]) {
-  const collectionItems = items.filter((i) =>
-    collectionItemIds.includes(i.id)
-  );
-  if (collectionItems.length === 0) return null;
-
-  const typeCounts: Record<string, number> = {};
-  for (const item of collectionItems) {
-    typeCounts[item.itemTypeId] = (typeCounts[item.itemTypeId] || 0) + 1;
-  }
-
-  const dominantTypeId = Object.entries(typeCounts).sort(
-    (a, b) => b[1] - a[1]
-  )[0][0];
-  return itemTypes.find((t) => t.id === dominantTypeId) ?? null;
-}
-
-function getCollectionTypeIcons(collectionItemIds: string[]) {
-  const collectionItems = items.filter((i) =>
-    collectionItemIds.includes(i.id)
-  );
-  const typeIds = [...new Set(collectionItems.map((i) => i.itemTypeId))];
-  return typeIds
-    .map((id) => itemTypes.find((t) => t.id === id))
-    .filter(Boolean);
-}
-
-export function CollectionsGrid() {
-  const recentCollections = [...collections]
-    .sort(
-      (a, b) =>
-        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-    )
-    .slice(0, 6);
+export async function CollectionsGrid() {
+  const collections = await getRecentCollections(6);
 
   return (
     <section>
@@ -71,18 +37,15 @@ export function CollectionsGrid() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {recentCollections.map((col) => {
-          const dominant = getDominantType(col.itemIds);
-          const typeIcons = getCollectionTypeIcons(col.itemIds);
-
+        {collections.map((col) => {
           return (
             <Link
               key={col.id}
               href={`/collections/${col.id}`}
               className="group rounded-xl border border-border p-4 transition-colors hover:border-muted-foreground/30"
               style={{
-                backgroundColor: dominant
-                  ? `${dominant.color}08`
+                backgroundColor: col.dominantType
+                  ? `${col.dominantType.color}08`
                   : undefined,
               }}
             >
@@ -95,7 +58,7 @@ export function CollectionsGrid() {
                     )}
                   </div>
                   <p className="mt-0.5 text-xs text-muted-foreground">
-                    {col.itemIds.length} items
+                    {col.itemCount} items
                   </p>
                 </div>
               </div>
@@ -107,8 +70,7 @@ export function CollectionsGrid() {
               )}
 
               <div className="mt-3 flex gap-1.5">
-                {typeIcons.map((type) => {
-                  if (!type) return null;
+                {col.typeIcons.map((type) => {
                   const Icon = iconMap[type.icon];
                   if (!Icon) return null;
                   return (
