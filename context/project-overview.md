@@ -398,6 +398,15 @@ model VerificationToken {
 - **References:** [Notion](https://notion.so), [Linear](https://linear.app), [Raycast](https://raycast.com)
 - Syntax highlighting on all code blocks
 
+## Screenshots
+
+Refer to the screenshots below as a base for the dashboard UI. It does not have to be exact. Use it as a reference:
+
+@context/screenshots/dashboard-ui-main.png
+@context/screenshots/dashboard-ui-drawer.png
+
+
+
 ### Responsiveness
 
 - **Desktop-first** — sidebar + main content layout
