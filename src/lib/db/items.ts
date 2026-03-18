@@ -40,6 +40,34 @@ export async function getRecentItems(limit = 10) {
   });
 }
 
+export async function getItemTypesWithCounts() {
+  const userId = await getDemoUserId();
+  if (!userId) return [];
+
+  const itemTypes = await prisma.itemType.findMany({
+    where: {
+      OR: [{ isSystem: true }, { userId }],
+    },
+    orderBy: { name: "asc" },
+    include: {
+      _count: {
+        select: {
+          items: { where: { userId } },
+        },
+      },
+    },
+  });
+
+  return itemTypes.map((type) => ({
+    id: type.id,
+    name: type.name,
+    icon: type.icon,
+    color: type.color,
+    isSystem: type.isSystem,
+    count: type._count.items,
+  }));
+}
+
 export async function getStats() {
   const userId = await getDemoUserId();
   if (!userId) {

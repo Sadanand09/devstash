@@ -24,12 +24,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useSidebar } from "@/components/dashboard/SidebarProvider";
-import {
-  itemTypes,
-  itemTypeCounts,
-  collections,
-  currentUser,
-} from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -42,22 +36,49 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Link: LinkIcon,
 };
 
-function SidebarContent() {
+export type SidebarItemType = {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  isSystem: boolean;
+  count: number;
+};
+
+export type SidebarFavoriteCollection = {
+  id: string;
+  name: string;
+};
+
+export type SidebarRecentCollection = {
+  id: string;
+  name: string;
+  itemCount: number;
+  dominantColor: string;
+};
+
+export type SidebarData = {
+  itemTypes: SidebarItemType[];
+  favoriteCollections: SidebarFavoriteCollection[];
+  recentCollections: SidebarRecentCollection[];
+};
+
+const TYPE_ORDER: Record<string, { order: number; label: string }> = {
+  snippet: { order: 0, label: "Snippets" },
+  prompt:  { order: 1, label: "Prompts" },
+  command: { order: 2, label: "Commands" },
+  note:    { order: 3, label: "Notes" },
+  file:    { order: 4, label: "Files" },
+  image:   { order: 5, label: "Images" },
+  link:    { order: 6, label: "Links" },
+};
+
+function SidebarContent({ data }: { data: SidebarData }) {
   const { collapsed } = useSidebar();
-
-  const favoriteCollections = collections.filter((c) => c.isFavorite);
-  const recentCollections = [...collections]
-    .sort(
-      (a, b) =>
-        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-    )
-    .slice(0, 5);
-
-  const userInitials = currentUser.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
+  const { favoriteCollections, recentCollections } = data;
+  const itemTypes = [...data.itemTypes].sort(
+    (a, b) => (TYPE_ORDER[a.name]?.order ?? 99) - (TYPE_ORDER[b.name]?.order ?? 99)
+  );
 
   if (collapsed) {
     return (
@@ -67,7 +88,7 @@ function SidebarContent() {
           return (
             <Link
               key={type.id}
-              href={`/items/${type.name}s`}
+              href={`/items/${type.name}`}
               className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               title={`${type.name}s`}
             >
@@ -91,7 +112,7 @@ function SidebarContent() {
 
         <div className="mt-auto">
           <Avatar size="sm">
-            <AvatarFallback>{userInitials}</AvatarFallback>
+            <AvatarFallback>DS</AvatarFallback>
           </Avatar>
         </div>
       </div>
@@ -110,11 +131,10 @@ function SidebarContent() {
           <nav className="mt-1 flex flex-col gap-0.5">
             {itemTypes.map((type) => {
               const Icon = iconMap[type.icon];
-              const count = itemTypeCounts[type.name] ?? 0;
               return (
                 <Link
                   key={type.id}
-                  href={`/items/${type.name}s`}
+                  href={`/items/${type.name}`}
                   className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 >
                   {Icon && (
@@ -122,9 +142,9 @@ function SidebarContent() {
                       <Icon className="h-4 w-4" />
                     </span>
                   )}
-                  <span className="capitalize">{type.name}s</span>
+                  <span>{TYPE_ORDER[type.name]?.label ?? type.name}</span>
                   <span className="ml-auto text-xs tabular-nums text-muted-foreground/60">
-                    {count}
+                    {type.count}
                   </span>
                 </Link>
               );
@@ -143,30 +163,32 @@ function SidebarContent() {
         </CollapsibleTrigger>
         <CollapsibleContent>
           {/* Favorites */}
-          <div className="mt-2">
-            <span className="px-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">
-              Favorites
-            </span>
-            <nav className="mt-1 flex flex-col gap-0.5">
-              {favoriteCollections.map((col) => (
-                <Link
-                  key={col.id}
-                  href={`/collections/${col.id}`}
-                  className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                >
-                  <Star
-                    className="h-3.5 w-3.5 shrink-0 fill-yellow-500 text-yellow-500"
-                  />
-                  <span className="truncate">{col.name}</span>
-                </Link>
-              ))}
-            </nav>
-          </div>
+          {favoriteCollections.length > 0 && (
+            <div className="mt-2">
+              <span className="px-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">
+                Favorites
+              </span>
+              <nav className="mt-1 flex flex-col gap-0.5">
+                {favoriteCollections.map((col) => (
+                  <Link
+                    key={col.id}
+                    href={`/collections/${col.id}`}
+                    className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  >
+                    <Star
+                      className="h-3.5 w-3.5 shrink-0 fill-yellow-500 text-yellow-500"
+                    />
+                    <span className="truncate">{col.name}</span>
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          )}
 
-          {/* All Collections (recent) */}
+          {/* Recent Collections */}
           <div className="mt-3">
             <span className="px-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">
-              All Collections
+              Recent
             </span>
             <nav className="mt-1 flex flex-col gap-0.5">
               {recentCollections.map((col) => (
@@ -175,15 +197,26 @@ function SidebarContent() {
                   href={`/collections/${col.id}`}
                   className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 >
-                  <Folder className="h-3.5 w-3.5 shrink-0" />
+                  <span
+                    className="h-2.5 w-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: col.dominantColor }}
+                  />
                   <span className="truncate">{col.name}</span>
                   <span className="ml-auto text-xs tabular-nums text-muted-foreground/60">
-                    {col.itemIds.length}
+                    {col.itemCount}
                   </span>
                 </Link>
               ))}
             </nav>
           </div>
+
+          {/* View all collections */}
+          <Link
+            href="/collections"
+            className="mt-2 block px-2 py-1.5 text-xs text-muted-foreground/60 transition-colors hover:text-foreground"
+          >
+            View all collections
+          </Link>
         </CollapsibleContent>
       </Collapsible>
 
@@ -191,12 +224,12 @@ function SidebarContent() {
       <div className="mt-auto border-t border-border p-3">
         <div className="flex items-center gap-3">
           <Avatar size="default">
-            <AvatarFallback>{userInitials}</AvatarFallback>
+            <AvatarFallback>DS</AvatarFallback>
           </Avatar>
           <div className="flex-1 overflow-hidden">
-            <p className="truncate text-sm font-medium">{currentUser.name}</p>
+            <p className="truncate text-sm font-medium">Demo User</p>
             <p className="truncate text-xs text-muted-foreground">
-              {currentUser.email}
+              demo@devstash.io
             </p>
           </div>
           <Button variant="ghost" size="icon-sm" className="shrink-0">
@@ -208,7 +241,7 @@ function SidebarContent() {
   );
 }
 
-export function Sidebar() {
+export function Sidebar({ data }: { data: SidebarData }) {
   const { collapsed, toggle } = useSidebar();
 
   return (
@@ -231,12 +264,12 @@ export function Sidebar() {
       </div>
 
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
-        <SidebarContent />
+        <SidebarContent data={data} />
       </div>
     </aside>
   );
 }
 
-export function MobileSidebarContent() {
-  return <SidebarContent />;
+export function MobileSidebarContent({ data }: { data: SidebarData }) {
+  return <SidebarContent data={data} />;
 }
