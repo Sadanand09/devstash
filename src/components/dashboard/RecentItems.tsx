@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Code,
   Sparkles,
@@ -11,7 +9,7 @@ import {
   Star,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { items, itemTypes, tags } from "@/lib/mock-data";
+import { getRecentItems } from "@/lib/db/items";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Code,
@@ -23,13 +21,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Link: LinkIcon,
 };
 
-export function RecentItems() {
-  const recentItems = [...items]
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
-    .slice(0, 10);
+export async function RecentItems() {
+  const recentItems = await getRecentItems(10);
 
   return (
     <section>
@@ -37,9 +30,8 @@ export function RecentItems() {
 
       <div className="flex flex-col gap-2">
         {recentItems.map((item) => {
-          const type = itemTypes.find((t) => t.id === item.itemTypeId);
+          const type = item.itemType;
           const Icon = type ? iconMap[type.icon] : null;
-          const itemTags = tags.filter((t) => item.tagIds.includes(t.id));
           const date = new Date(item.createdAt).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
@@ -84,9 +76,9 @@ export function RecentItems() {
                 )}
               </div>
 
-              {itemTags.length > 0 && (
+              {item.tags.length > 0 && (
                 <div className="hidden flex-wrap gap-1 sm:flex">
-                  {itemTags.slice(0, 3).map((tag) => (
+                  {item.tags.slice(0, 3).map((tag) => (
                     <Badge key={tag.id} variant="secondary">
                       {tag.name}
                     </Badge>

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Code,
   Sparkles,
@@ -12,7 +10,7 @@ import {
   Star,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { items, itemTypes, tags } from "@/lib/mock-data";
+import { getPinnedItems } from "@/lib/db/items";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Code,
@@ -24,8 +22,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Link: LinkIcon,
 };
 
-export function PinnedItems() {
-  const pinnedItems = items.filter((i) => i.isPinned);
+export async function PinnedItems() {
+  const pinnedItems = await getPinnedItems();
 
   if (pinnedItems.length === 0) return null;
 
@@ -38,9 +36,8 @@ export function PinnedItems() {
 
       <div className="flex flex-col gap-3">
         {pinnedItems.map((item) => {
-          const type = itemTypes.find((t) => t.id === item.itemTypeId);
+          const type = item.itemType;
           const Icon = type ? iconMap[type.icon] : null;
-          const itemTags = tags.filter((t) => item.tagIds.includes(t.id));
           const date = new Date(item.createdAt).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
@@ -78,9 +75,9 @@ export function PinnedItems() {
                     {item.description}
                   </p>
                 )}
-                {itemTags.length > 0 && (
+                {item.tags.length > 0 && (
                   <div className="mt-2 flex flex-wrap gap-1.5">
-                    {itemTags.map((tag) => (
+                    {item.tags.map((tag) => (
                       <Badge key={tag.id} variant="secondary">
                         {tag.name}
                       </Badge>
