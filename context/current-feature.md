@@ -1,23 +1,22 @@
-# Current Feature: Add Pro Badge to Sidebar
+# Current Feature
 
-Add a pro badge to the files and images type in the sidebar.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Add a "PRO" badge next to the Files and Images item types in the sidebar
-- Use the ShadCN UI Badge component
-- Badge should be clean and subtle in appearance
-- "PRO" text should be all uppercase
+<!-- Goals and requirements -->
 
 ## Notes
 
 <!-- Any extra notes -->
 
 ## History
+
+- **2026-03-23** - Pro Badge: Added subtle ShadCN PRO badge (secondary variant) next to Files and Images item types in the dashboard sidebar
 
 - **2026-03-18** - Stats & Sidebar: Replaced mock sidebar data with real Neon database queries. Added getItemTypesWithCounts(), getFavoriteCollections(), getSidebarCollections() to db layer. Converted dashboard layout to server component with client DashboardShell. Sidebar now shows ordered item types with counts, favorite collections with stars, recent collections with dominant-type colored circles, and "View all collections" link
 
