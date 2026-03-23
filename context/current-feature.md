@@ -1,23 +1,18 @@
 # Current Feature
 
-Code Scanner Quick Wins - Low-risk fixes from code audit: Suspense streaming, redundant DB lookups, and shared iconMap extraction.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-1. Add individual Suspense boundaries around each async section in dashboard/page.tsx so sections stream independently
-2. Extract shared getDemoUserId() helper from collections.ts to eliminate redundant per-request user lookups (N+1 issue) - use Prisma only, no raw SQL
-3. Extract duplicated iconMap constant from 4 dashboard components into a shared src/lib/icon-map.ts module
+<!-- Goals and requirements -->
 
 ## Notes
 
-- No auth changes (auth not implemented yet)
-- Keep mock-data.ts as-is
-- Inline styles kept as-is (pragmatically necessary for runtime DB-driven colors)
-- Stick to Prisma conventions for all DB changes
+<!-- Any extra notes -->
 
 ## History
 
@@ -31,3 +26,4 @@ In Progress
 - **2026-03-18** - Dashboard Items: Replaced mock item data with real Neon database queries via Prisma. Created src/lib/db/items.ts with getPinnedItems(), getRecentItems(), getStats(). Converted PinnedItems, RecentItems, and StatsCards to async server components
 - **2026-03-18** - Stats & Sidebar: Replaced mock sidebar data with real Neon database queries. Added getItemTypesWithCounts(), getFavoriteCollections(), getSidebarCollections() to db layer. Converted dashboard layout to server component with client DashboardShell. Sidebar now shows ordered item types with counts, favorite collections with stars, recent collections with dominant-type colored circles, and "View all collections" link
 - **2026-03-23** - Pro Badge: Added subtle ShadCN PRO badge (secondary variant) next to Files and Images item types in the dashboard sidebar
+- **2026-03-23** - Code Scanner Quick Wins: Added Suspense boundaries with skeleton fallbacks for independent dashboard streaming, extracted shared getDemoUserId() helper to eliminate redundant user lookups, consolidated duplicated iconMap into shared module
