@@ -1,18 +1,23 @@
 # Current Feature
 
-<!-- Feature name and short description -->
+Code Scanner Quick Wins - Low-risk fixes from code audit: Suspense streaming, redundant DB lookups, and shared iconMap extraction.
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+1. Add individual Suspense boundaries around each async section in dashboard/page.tsx so sections stream independently
+2. Extract shared getDemoUserId() helper from collections.ts to eliminate redundant per-request user lookups (N+1 issue) - use Prisma only, no raw SQL
+3. Extract duplicated iconMap constant from 4 dashboard components into a shared src/lib/icon-map.ts module
 
 ## Notes
 
-<!-- Any extra notes -->
+- No auth changes (auth not implemented yet)
+- Keep mock-data.ts as-is
+- Inline styles kept as-is (pragmatically necessary for runtime DB-driven colors)
+- Stick to Prisma conventions for all DB changes
 
 ## History
 

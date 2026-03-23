@@ -1,25 +1,7 @@
-import {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link as LinkIcon,
-  Star,
-} from "lucide-react";
+import { Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { iconMap } from "@/lib/icon-map";
 import { getRecentItems } from "@/lib/db/items";
-
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link: LinkIcon,
-};
 
 export async function RecentItems() {
   const recentItems = await getRecentItems(10);

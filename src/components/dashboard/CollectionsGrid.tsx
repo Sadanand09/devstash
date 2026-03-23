@@ -1,25 +1,7 @@
 import Link from "next/link";
-import {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link as LinkIcon,
-  Star,
-} from "lucide-react";
+import { Star } from "lucide-react";
+import { iconMap } from "@/lib/icon-map";
 import { getRecentCollections } from "@/lib/db/collections";
-
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link: LinkIcon,
-};
 
 export async function CollectionsGrid() {
   const collections = await getRecentCollections(6);

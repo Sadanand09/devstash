@@ -1,18 +1,12 @@
 import { prisma } from "@/lib/db";
-
-// TODO: Replace with actual authenticated user lookup once auth is implemented
-const DEMO_USER_EMAIL = "demo@devstash.io";
+import { getDemoUserId } from "@/lib/db/auth";
 
 export async function getFavoriteCollections() {
-  const user = await prisma.user.findUnique({
-    where: { email: DEMO_USER_EMAIL },
-    select: { id: true },
-  });
-
-  if (!user) return [];
+  const userId = await getDemoUserId();
+  if (!userId) return [];
 
   return prisma.collection.findMany({
-    where: { userId: user.id, isFavorite: true },
+    where: { userId, isFavorite: true },
     orderBy: { name: "asc" },
     select: {
       id: true,
@@ -22,15 +16,11 @@ export async function getFavoriteCollections() {
 }
 
 export async function getSidebarCollections(limit = 5) {
-  const user = await prisma.user.findUnique({
-    where: { email: DEMO_USER_EMAIL },
-    select: { id: true },
-  });
-
-  if (!user) return [];
+  const userId = await getDemoUserId();
+  if (!userId) return [];
 
   const collections = await prisma.collection.findMany({
-    where: { userId: user.id },
+    where: { userId },
     orderBy: { updatedAt: "desc" },
     take: limit,
     include: {
@@ -69,15 +59,11 @@ export async function getSidebarCollections(limit = 5) {
 }
 
 export async function getRecentCollections(limit = 6) {
-  const user = await prisma.user.findUnique({
-    where: { email: DEMO_USER_EMAIL },
-    select: { id: true },
-  });
-
-  if (!user) return [];
+  const userId = await getDemoUserId();
+  if (!userId) return [];
 
   const collections = await prisma.collection.findMany({
-    where: { userId: user.id },
+    where: { userId },
     orderBy: { updatedAt: "desc" },
     take: limit,
     include: {
@@ -100,7 +86,6 @@ export async function getRecentCollections(limit = 6) {
       typeCounts[item.itemTypeId] = (typeCounts[item.itemTypeId] || 0) + 1;
     }
 
-    // Dominant type = most-used content type in the collection
     const dominantType =
       colItems.length > 0
         ? colItems
@@ -112,7 +97,6 @@ export async function getRecentCollections(limit = 6) {
             ) ?? null
         : null;
 
-    // Unique item types present in the collection
     const typeIcons = [
       ...new Map(colItems.map((i) => [i.itemType.id, i.itemType])).values(),
     ];

@@ -1,7 +1,13 @@
+import { Suspense } from "react";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { CollectionsGrid } from "@/components/dashboard/CollectionsGrid";
 import { PinnedItems } from "@/components/dashboard/PinnedItems";
 import { RecentItems } from "@/components/dashboard/RecentItems";
+import {
+  StatsSkeleton,
+  CollectionsSkeleton,
+  ItemsSkeleton,
+} from "@/components/dashboard/DashboardSkeletons";
 
 export default function DashboardPage() {
   return (
@@ -11,10 +17,18 @@ export default function DashboardPage() {
         <p className="text-muted-foreground">Your developer knowledge hub</p>
       </div>
 
-      <StatsCards />
-      <CollectionsGrid />
-      <PinnedItems />
-      <RecentItems />
+      <Suspense fallback={<StatsSkeleton />}>
+        <StatsCards />
+      </Suspense>
+      <Suspense fallback={<CollectionsSkeleton />}>
+        <CollectionsGrid />
+      </Suspense>
+      <Suspense fallback={<ItemsSkeleton />}>
+        <PinnedItems />
+      </Suspense>
+      <Suspense fallback={<ItemsSkeleton />}>
+        <RecentItems />
+      </Suspense>
     </div>
   );
 }

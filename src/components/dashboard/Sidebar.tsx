@@ -2,13 +2,6 @@
 
 import Link from "next/link";
 import {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link as LinkIcon,
   ChevronDown,
   Star,
   Folder,
@@ -25,17 +18,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useSidebar } from "@/components/dashboard/SidebarProvider";
+import { iconMap } from "@/lib/icon-map";
 import { cn } from "@/lib/utils";
-
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link: LinkIcon,
-};
 
 export type SidebarItemType = {
   id: string;
