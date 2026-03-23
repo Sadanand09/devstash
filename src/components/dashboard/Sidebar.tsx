@@ -16,6 +16,7 @@ import {
   Settings,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -143,6 +144,11 @@ function SidebarContent({ data }: { data: SidebarData }) {
                     </span>
                   )}
                   <span>{TYPE_ORDER[type.name]?.label ?? type.name}</span>
+                  {(type.name === "file" || type.name === "image") && (
+                    <Badge variant="secondary" className="h-4 px-1.5 text-[10px] font-semibold tracking-wide">
+                      PRO
+                    </Badge>
+                  )}
                   <span className="ml-auto text-xs tabular-nums text-muted-foreground/60">
                     {type.count}
                   </span>
