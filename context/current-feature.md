@@ -1,46 +1,18 @@
-# Current Feature: Auth Credentials - Email/Password Provider
+# Current Feature
 
 <!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Add Credentials provider for email/password authentication with registration
-- Use bcryptjs for password hashing
-- Add password field to User model via Prisma migration
-- Update `auth.config.ts` with Credentials provider placeholder (`authorize: () => null`)
-- Update `auth.ts` to override Credentials with actual bcrypt validation logic
-- Create registration API route at `POST /api/auth/register` (name, email, password, confirmPassword)
-- Validate passwords match, check for existing user, hash password, create user
-- Ensure GitHub OAuth still works alongside credentials
+<!-- Goals and requirements -->
 
 ## Notes
 
-### Credentials Provider in Split Pattern
-- `auth.config.ts`: Add Credentials provider with `authorize: () => null` placeholder
-- `auth.ts`: Override the Credentials provider with actual bcrypt validation logic
-
-### Registration API Route
-- `POST /api/auth/register`
-- Accept: name, email, password, confirmPassword
-- Validate passwords match
-- Check if user already exists
-- Hash password with bcryptjs
-- Create user in database
-- Return success/error response
-
-### Testing
-1. Test registration via curl
-2. Go to `/api/auth/signin`
-3. Sign in with email/password
-4. Verify redirect to `/dashboard`
-5. Verify GitHub OAuth still works
-
-### References
-- Credentials provider: https://authjs.dev/getting-started/authentication/credentials
+<!-- Any extra notes -->
 
 ## History
 
@@ -56,3 +28,4 @@ In Progress
 - **2026-03-23** - Pro Badge: Added subtle ShadCN PRO badge (secondary variant) next to Files and Images item types in the dashboard sidebar
 - **2026-03-23** - Code Scanner Quick Wins: Added Suspense boundaries with skeleton fallbacks for independent dashboard streaming, extracted shared getDemoUserId() helper to eliminate redundant user lookups, consolidated duplicated iconMap into shared module
 - **2026-03-24** - Auth Phase 1: NextAuth v5 with GitHub OAuth, Prisma adapter, JWT strategy, split config pattern for edge compatibility, proxy-based route protection for /dashboard/*, session type extension with user.id
+- **2026-03-24** - Auth Phase 2: Credentials provider with email/password registration, bcrypt validation in split config pattern, POST /api/auth/register route with validation and hashing
