@@ -22,6 +22,13 @@ Read these for full project context:
 - OpenAI gpt-5-nano
 - Stripe (payments)
 
+## Neon Database
+
+- Project: `weathered-thunder-99567429` (devstash)
+- Default branch: `br-blue-wildflower-anmqtosy` (development)
+- Always use the development branch for all Neon MCP operations
+- NEVER use the main/production branch (`br-long-unit-an0pli7p`) unless explicitly told to
+
 ## Quick Commands
 
 ```bash
