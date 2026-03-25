@@ -35,23 +35,40 @@ export function SignInForm() {
     setResendSent(false);
     setLoading(true);
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    try {
+      // Check rate limit before attempting sign-in
+      const rlRes = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
-    setLoading(false);
-
-    if (result?.error) {
-      if (result.error.includes("EMAIL_NOT_VERIFIED")) {
-        setNeedsVerification(true);
-      } else {
-        setError("Invalid email or password");
+      if (!rlRes.ok) {
+        const rlData = await rlRes.json();
+        setError(rlData.error ?? "Too many attempts");
+        return;
       }
-    } else {
-      router.push(callbackUrl);
-      router.refresh();
+
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        if (result.error.includes("EMAIL_NOT_VERIFIED")) {
+          setNeedsVerification(true);
+        } else {
+          setError("Invalid email or password");
+        }
+      } else {
+        router.push(callbackUrl);
+        router.refresh();
+      }
+    } catch {
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   }
 

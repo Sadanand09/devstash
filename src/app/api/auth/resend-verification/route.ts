@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/email";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
   try {
@@ -13,6 +14,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    const rateLimited = await checkRateLimit("resendVerification", email);
+    if (rateLimited) return rateLimited;
 
     const user = await prisma.user.findUnique({ where: { email } });
 
