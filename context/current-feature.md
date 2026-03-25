@@ -1,20 +1,14 @@
-# Current Feature: Auth UI - Sign In, Register & Sign Out
+# Current Feature
 
-Replace NextAuth default pages with custom sign-in, register pages and update sidebar with user avatar/sign-out.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Custom sign-in page (`/sign-in`) with email/password fields, GitHub OAuth button, and link to register
-- Custom register page (`/register`) with name, email, password, confirm password fields and validation
-- User avatar in bottom of sidebar (GitHub image or initials fallback)
-- Dropdown on avatar click with "Sign out" option
-- Clicking avatar icon navigates to `/profile`
-- Reusable avatar component handling both image and initials cases
-- Form validation and error display on both pages
+<!-- Goals and requirements -->
 
 ## Notes
 
@@ -35,3 +29,4 @@ In Progress
 - **2026-03-23** - Code Scanner Quick Wins: Added Suspense boundaries with skeleton fallbacks for independent dashboard streaming, extracted shared getDemoUserId() helper to eliminate redundant user lookups, consolidated duplicated iconMap into shared module
 - **2026-03-24** - Auth Phase 1: NextAuth v5 with GitHub OAuth, Prisma adapter, JWT strategy, split config pattern for edge compatibility, proxy-based route protection for /dashboard/*, session type extension with user.id
 - **2026-03-24** - Auth Phase 2: Credentials provider with email/password registration, bcrypt validation in split config pattern, POST /api/auth/register route with validation and hashing
+- **2026-03-25** - Auth Phase 3: Custom /sign-in page (email/password + GitHub OAuth), /register page with validation and success toast, reusable UserAvatar component (image + initials fallback), sidebar user area with real session data and dropdown sign-out
