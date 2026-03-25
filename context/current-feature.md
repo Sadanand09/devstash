@@ -1,18 +1,21 @@
-# Current Feature
-
-<!-- Feature name and short description -->
+# Current Feature — Email Verification Toggle
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+- Add `REQUIRE_EMAIL_VERIFICATION=true|false` env variable to toggle the entire email verification system
+- When `false`: register creates user and redirects to sign-in (no email sent, no verification required)
+- When `true`: existing flow (send verification email, block unverified sign-in)
+- Default to `false` so development works without a Resend domain
 
 ## Notes
 
-<!-- Any extra notes -->
+- Touches: register API, auth.ts (authorize), register page redirect
+- Set to `false` in `.env` for now (no custom domain on Resend yet)
+- When domain is linked to Resend, flip to `true`
 
 ## History
 

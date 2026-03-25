@@ -46,7 +46,7 @@ export default function RegisterPage() {
     if (!res.ok) {
       setError(data.error ?? "Something went wrong");
     } else {
-      router.push("/check-email");
+      router.push(data.requireVerification ? "/check-email" : "/sign-in");
     }
   }
 
