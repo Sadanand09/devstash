@@ -34,3 +34,4 @@ Completed
 - **2026-03-25** - Email Verification Toggle: REQUIRE_EMAIL_VERIFICATION env variable to enable/disable email verification system, defaults to false for development
 - **2026-03-25** - Forgot Password: Password reset flow with /forgot-password and /reset-password pages, reuses VerificationToken model, 1-hour token expiry, Resend email, email enumeration prevention, credentials-only users
 - **2026-03-25** - Profile Page: /profile route with account info (avatar, email, auth method, join date), usage stats with item type breakdown, change password for credentials users, delete account with typed confirmation dialog, profile icon in sidebar dropdown
+- **2026-03-25** - Rate Limiting: Upstash Redis rate limiting on auth endpoints (login, register, forgot-password, reset-password, resend-verification) with sliding window algorithm, reusable utility, 429 responses with Retry-After headers, fail-open on Redis errors
