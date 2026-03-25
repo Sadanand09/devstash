@@ -12,12 +12,20 @@ import { SidebarProvider, useSidebar } from "@/components/dashboard/SidebarProvi
 import { Sidebar, MobileSidebarContent } from "@/components/dashboard/Sidebar";
 import type { SidebarData } from "@/components/dashboard/Sidebar";
 
+export type SessionUser = {
+  name: string | null;
+  email: string | null;
+  image: string | null;
+} | null;
+
 function DashboardContent({
   children,
   sidebarData,
+  user,
 }: {
   children: React.ReactNode;
   sidebarData: SidebarData;
+  user: SessionUser;
 }) {
   const { mobileOpen, setMobileOpen } = useSidebar();
 
@@ -64,14 +72,14 @@ function DashboardContent({
       {/* Body: Sidebar + Main */}
       <div className="flex flex-1 overflow-hidden">
         {/* Desktop Sidebar */}
-        <Sidebar data={sidebarData} />
+        <Sidebar data={sidebarData} user={user} />
 
         {/* Mobile Sidebar (Sheet/Drawer) */}
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetContent side="left" showCloseButton className="w-72 p-0">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <div className="flex h-full flex-col pt-4">
-              <MobileSidebarContent data={sidebarData} />
+              <MobileSidebarContent data={sidebarData} user={user} />
             </div>
           </SheetContent>
         </Sheet>
@@ -86,13 +94,17 @@ function DashboardContent({
 export function DashboardShell({
   children,
   sidebarData,
+  user,
 }: {
   children: React.ReactNode;
   sidebarData: SidebarData;
+  user: SessionUser;
 }) {
   return (
     <SidebarProvider>
-      <DashboardContent sidebarData={sidebarData}>{children}</DashboardContent>
+      <DashboardContent sidebarData={sidebarData} user={user}>
+        {children}
+      </DashboardContent>
     </SidebarProvider>
   );
 }

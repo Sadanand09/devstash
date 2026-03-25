@@ -1,14 +1,20 @@
-# Current Feature
+# Current Feature: Auth UI - Sign In, Register & Sign Out
 
-<!-- Feature name and short description -->
+Replace NextAuth default pages with custom sign-in, register pages and update sidebar with user avatar/sign-out.
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+- Custom sign-in page (`/sign-in`) with email/password fields, GitHub OAuth button, and link to register
+- Custom register page (`/register`) with name, email, password, confirm password fields and validation
+- User avatar in bottom of sidebar (GitHub image or initials fallback)
+- Dropdown on avatar click with "Sign out" option
+- Clicking avatar icon navigates to `/profile`
+- Reusable avatar component handling both image and initials cases
+- Form validation and error display on both pages
 
 ## Notes
 

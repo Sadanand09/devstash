@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import {
   ChevronDown,
   Star,
   Folder,
   PanelLeft,
-  Settings,
+  LogOut,
 } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -17,9 +17,18 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import { useSidebar } from "@/components/dashboard/SidebarProvider";
+import { UserAvatar } from "@/components/UserAvatar";
 import { iconMap } from "@/lib/icon-map";
 import { cn } from "@/lib/utils";
+import type { SessionUser } from "@/components/dashboard/DashboardShell";
 
 export type SidebarItemType = {
   id: string;
@@ -58,7 +67,7 @@ const TYPE_ORDER: Record<string, { order: number; label: string }> = {
   link:    { order: 6, label: "Links" },
 };
 
-function SidebarContent({ data }: { data: SidebarData }) {
+function SidebarContent({ data, user }: { data: SidebarData; user: SessionUser }) {
   const { collapsed } = useSidebar();
   const { favoriteCollections, recentCollections } = data;
   const itemTypes = [...data.itemTypes].sort(
@@ -96,9 +105,20 @@ function SidebarContent({ data }: { data: SidebarData }) {
         ))}
 
         <div className="mt-auto">
-          <Avatar size="sm">
-            <AvatarFallback>DS</AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="cursor-pointer" aria-label="User menu">
+              <UserAvatar name={user?.name} image={user?.image} size="sm" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="right" align="end">
+              <DropdownMenuItem onClick={() => window.location.href = "/profile"}>
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/sign-in" })}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     );
@@ -212,26 +232,35 @@ function SidebarContent({ data }: { data: SidebarData }) {
 
       {/* User Avatar Area */}
       <div className="mt-auto border-t border-border p-3">
-        <div className="flex items-center gap-3">
-          <Avatar size="default">
-            <AvatarFallback>DS</AvatarFallback>
-          </Avatar>
-          <div className="flex-1 overflow-hidden">
-            <p className="truncate text-sm font-medium">Demo User</p>
-            <p className="truncate text-xs text-muted-foreground">
-              demo@devstash.io
-            </p>
-          </div>
-          <Button variant="ghost" size="icon-sm" className="shrink-0">
-            <Settings className="h-4 w-4" />
-          </Button>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex w-full cursor-pointer items-center gap-3 rounded-md p-1 hover:bg-muted">
+            <UserAvatar name={user?.name} image={user?.image} />
+            <div className="flex-1 overflow-hidden text-left">
+              <p className="truncate text-sm font-medium">
+                {user?.name ?? "Guest"}
+              </p>
+              <p className="truncate text-xs text-muted-foreground">
+                {user?.email ?? ""}
+              </p>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="top" align="start">
+            <DropdownMenuItem onClick={() => window.location.href = "/profile"}>
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/sign-in" })}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
 }
 
-export function Sidebar({ data }: { data: SidebarData }) {
+export function Sidebar({ data, user }: { data: SidebarData; user: SessionUser }) {
   const { collapsed, toggle } = useSidebar();
 
   return (
@@ -254,12 +283,12 @@ export function Sidebar({ data }: { data: SidebarData }) {
       </div>
 
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
-        <SidebarContent data={data} />
+        <SidebarContent data={data} user={user} />
       </div>
     </aside>
   );
 }
 
-export function MobileSidebarContent({ data }: { data: SidebarData }) {
-  return <SidebarContent data={data} />;
+export function MobileSidebarContent({ data, user }: { data: SidebarData; user: SessionUser }) {
+  return <SidebarContent data={data} user={user} />;
 }
