@@ -1,21 +1,18 @@
-# Current Feature — Email Verification Toggle
+# Current Feature
+
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Add `REQUIRE_EMAIL_VERIFICATION=true|false` env variable to toggle the entire email verification system
-- When `false`: register creates user and redirects to sign-in (no email sent, no verification required)
-- When `true`: existing flow (send verification email, block unverified sign-in)
-- Default to `false` so development works without a Resend domain
+<!-- Goals and requirements -->
 
 ## Notes
 
-- Touches: register API, auth.ts (authorize), register page redirect
-- Set to `false` in `.env` for now (no custom domain on Resend yet)
-- When domain is linked to Resend, flip to `true`
+<!-- Any extra notes -->
 
 ## History
 
@@ -34,3 +31,4 @@ In Progress
 - **2026-03-24** - Auth Phase 2: Credentials provider with email/password registration, bcrypt validation in split config pattern, POST /api/auth/register route with validation and hashing
 - **2026-03-25** - Auth Phase 3: Custom /sign-in page (email/password + GitHub OAuth), /register page with validation and success toast, reusable UserAvatar component (image + initials fallback), sidebar user area with real session data and dropdown sign-out
 - **2026-03-25** - Email Verification: Resend integration for verification emails on register, block sign-in for unverified users, /verify-email token verification page, /check-email confirmation page, resend verification option on sign-in, clean-users utility script
+- **2026-03-25** - Email Verification Toggle: REQUIRE_EMAIL_VERIFICATION env variable to enable/disable email verification system, defaults to false for development
