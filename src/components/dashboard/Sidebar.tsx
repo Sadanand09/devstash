@@ -8,6 +8,7 @@ import {
   Folder,
   PanelLeft,
   LogOut,
+  UserCircle,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -111,6 +112,7 @@ function SidebarContent({ data, user }: { data: SidebarData; user: SessionUser }
             </DropdownMenuTrigger>
             <DropdownMenuContent side="right" align="end">
               <DropdownMenuItem onClick={() => window.location.href = "/profile"}>
+                <UserCircle className="mr-2 h-4 w-4" />
                 Profile
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/sign-in" })}>
