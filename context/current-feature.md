@@ -1,30 +1,18 @@
 # Current Feature
 
-Forgot Password: Password reset flow using existing VerificationToken model and Resend email
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Add "Forgot password?" link on the sign-in page below the password field
-- Create `/forgot-password` page with email input form
-- Create `POST /api/auth/forgot-password` route that generates a reset token (reusing VerificationToken model) and sends a password reset email via Resend
-- Create `/reset-password` page that accepts a token query param, validates it, and shows a new password form
-- Create `POST /api/auth/reset-password` route that verifies the token, hashes the new password with bcrypt, updates the user, and deletes the token
-- Add `sendPasswordResetEmail()` to `src/lib/email.ts` for the reset email template
-- Add `generatePasswordResetToken()` and `verifyPasswordResetToken()` to `src/lib/tokens.ts` (reuse VerificationToken model, but keep functions separate from email verification for clarity)
-- Show success/error states on both pages with appropriate messaging
-- Only allow reset for users who registered with credentials (have a hashed password)
+<!-- Goals and requirements -->
 
 ## Notes
 
-- Reuse the existing `VerificationToken` Prisma model (identifier, token, expires) - no schema changes needed
-- Reuse the existing Resend integration in `src/lib/email.ts`
-- Follow the same patterns as the email verification flow (token generation, email sending, token verification page)
-- Token expiry: 1 hour (shorter than email verification's 24 hours for security)
-- Password requirements: match whatever the register page uses
+<!-- Any extra notes -->
 
 ## History
 
@@ -44,3 +32,4 @@ In Progress
 - **2026-03-25** - Auth Phase 3: Custom /sign-in page (email/password + GitHub OAuth), /register page with validation and success toast, reusable UserAvatar component (image + initials fallback), sidebar user area with real session data and dropdown sign-out
 - **2026-03-25** - Email Verification: Resend integration for verification emails on register, block sign-in for unverified users, /verify-email token verification page, /check-email confirmation page, resend verification option on sign-in, clean-users utility script
 - **2026-03-25** - Email Verification Toggle: REQUIRE_EMAIL_VERIFICATION env variable to enable/disable email verification system, defaults to false for development
+- **2026-03-25** - Forgot Password: Password reset flow with /forgot-password and /reset-password pages, reuses VerificationToken model, 1-hour token expiry, Resend email, email enumeration prevention, credentials-only users
