@@ -1,18 +1,30 @@
 # Current Feature
 
-<!-- Feature name and short description -->
+Forgot Password: Password reset flow using existing VerificationToken model and Resend email
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+- Add "Forgot password?" link on the sign-in page below the password field
+- Create `/forgot-password` page with email input form
+- Create `POST /api/auth/forgot-password` route that generates a reset token (reusing VerificationToken model) and sends a password reset email via Resend
+- Create `/reset-password` page that accepts a token query param, validates it, and shows a new password form
+- Create `POST /api/auth/reset-password` route that verifies the token, hashes the new password with bcrypt, updates the user, and deletes the token
+- Add `sendPasswordResetEmail()` to `src/lib/email.ts` for the reset email template
+- Add `generatePasswordResetToken()` and `verifyPasswordResetToken()` to `src/lib/tokens.ts` (reuse VerificationToken model, but keep functions separate from email verification for clarity)
+- Show success/error states on both pages with appropriate messaging
+- Only allow reset for users who registered with credentials (have a hashed password)
 
 ## Notes
 
-<!-- Any extra notes -->
+- Reuse the existing `VerificationToken` Prisma model (identifier, token, expires) - no schema changes needed
+- Reuse the existing Resend integration in `src/lib/email.ts`
+- Follow the same patterns as the email verification flow (token generation, email sending, token verification page)
+- Token expiry: 1 hour (shorter than email verification's 24 hours for security)
+- Password requirements: match whatever the register page uses
 
 ## History
 
