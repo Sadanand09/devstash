@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,8 +46,7 @@ export default function RegisterPage() {
     if (!res.ok) {
       setError(data.error ?? "Something went wrong");
     } else {
-      toast.success("Account created! You can now sign in.");
-      router.push("/sign-in");
+      router.push("/check-email");
     }
   }
 

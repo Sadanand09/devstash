@@ -1,18 +1,24 @@
-# Current Feature
-
-<!-- Feature name and short description -->
+# Current Feature — Email Verification on Register
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+- After registration, send a verification email via Resend with a unique verification link
+- Users must click the link to verify their email before they can sign in
+- Unverified users who try to sign in see a clear message to check their email
+- Verification tokens expire after a reasonable time period
+- Handle edge cases: expired tokens, already-verified users, resend verification
 
 ## Notes
 
-<!-- Any extra notes -->
+- Using Resend for email delivery (RESEND_API_KEY already in .env)
+- Integrates with existing NextAuth v5 + Credentials provider setup
+- Needs a verification token model/table in Prisma schema
+- Registration endpoint (/api/auth/register) needs to trigger verification email
+- New /verify-email route to handle token verification
 
 ## History
 
