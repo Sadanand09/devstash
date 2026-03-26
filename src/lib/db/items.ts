@@ -58,6 +58,23 @@ export async function getItemTypesWithCounts() {
   }));
 }
 
+export async function getItemsByType(typeName: string) {
+  const userId = await getDemoUserId();
+  if (!userId) return [];
+
+  return prisma.item.findMany({
+    where: {
+      userId,
+      itemType: { name: typeName },
+    },
+    orderBy: { createdAt: "desc" },
+    include: {
+      itemType: true,
+      tags: true,
+    },
+  });
+}
+
 export async function getStats() {
   const userId = await getDemoUserId();
   if (!userId) {
