@@ -1,28 +1,18 @@
-# Current Feature — Item Drawer
+# Current Feature
 
-Right-side slide-in drawer that opens when clicking an item card. This is the item detail view — there is no separate item page.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Use shadcn Sheet component, opens from the right
-- Clicking an ItemCard opens the drawer with that item's full data
-- Works on both dashboard and items list pages
-- Action bar with Favorite (star, yellow when active), Pin, Copy, Edit (pencil), Delete (trash, right-aligned)
-- Client wrapper component to manage drawer state (pages are server components)
-- Fetch full item detail on click via API route (`/api/items/[id]`), no page navigation
-- Drawer shows skeleton/loading state while fetching
-- Query function in `lib/db/items.ts`, API route calls it with auth check
+<!-- Goals and requirements -->
 
 ## Notes
 
-- Card data (title, description, tags) already fetched by server component
-- Full item detail (content, collections, language, etc.) fetched on click via API
-- Code editor and item-specific extras will come later — this is just the detail display
-- See `context/screenshots/dashboard-ui-drawer.png` for visual reference
+<!-- Any extra notes -->
 
 ## History
 
@@ -48,3 +38,4 @@ In Progress
 - **2026-03-26** - GitHub OAuth Fix: Server-side signIn via Server Action, proxy redirect to /sign-in, allowDangerousEmailAccountLinking for GitHub provider
 - **2026-03-26** - Items List View: Dynamic /items/[type] route with type-filtered items in responsive two-column grid, reusable ItemCard component, getItemsByType() DB query, shared dashboard layout with sidebar
 - **2026-03-26** - Vitest Setup + Items Grid Layout: Vitest configured for server-side unit testing (node env, src/lib/**/*.test.ts), npm run test/test:watch scripts, smoke test for cn(). Items grid updated to 3-column on large screens (1 col mobile, 2 col md, 3 col lg)
+- **2026-03-26** - Item Drawer: Right-side Sheet drawer opens on item click with instant card data display and progressive API detail loading. GET /api/items/[id] with auth, getItemById() query, ItemDrawerProvider context, ClickableItem wrapper, action bar (Favorite/Pin/Copy/Edit/Delete). Cached getDemoUserId() for deduplication
