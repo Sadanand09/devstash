@@ -1,31 +1,18 @@
-# Current Feature — Item Drawer Edit Mode
+# Current Feature
 
-Clicking the Edit button in the item drawer's action bar switches from view mode to edit mode inline. Fields become editable inputs; Save persists via server action.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Edit button toggles drawer into edit mode; action bar replaced with Save/Cancel buttons
-- Cancel discards changes and returns to view mode
-- Save persists changes via server action, returns to view mode, refreshes drawer data
-- Toast notification on save success or error
-- Editable fields (all types): Title (required), Description, Tags (comma-separated input → tag array)
-- Type-specific fields: Content (snippet/prompt/command/note), Language (snippet/command), URL (link)
-- Non-editable in edit mode: item type, collections, dates
-- Zod validation in server action with error responses
-- `updateItem` server action in `src/actions/items.ts` with `{ success, data, error }` pattern
-- `updateItem` query in `lib/db/items.ts` — disconnect all tags, connect-or-create new ones
-- Disable Save when title is empty; `router.refresh()` after save
-- No form library — controlled inputs with local state
+<!-- Goals and requirements -->
 
 ## Notes
 
-- Spec: context/features/item-drawer-edit-spec.md
-- Content textarea is plain text, not a code editor (that comes later)
-- Collections managed separately — not part of this feature
+<!-- Any extra notes -->
 
 ## History
 
@@ -52,3 +39,4 @@ In Progress
 - **2026-03-26** - Items List View: Dynamic /items/[type] route with type-filtered items in responsive two-column grid, reusable ItemCard component, getItemsByType() DB query, shared dashboard layout with sidebar
 - **2026-03-26** - Vitest Setup + Items Grid Layout: Vitest configured for server-side unit testing (node env, src/lib/**/*.test.ts), npm run test/test:watch scripts, smoke test for cn(). Items grid updated to 3-column on large screens (1 col mobile, 2 col md, 3 col lg)
 - **2026-03-26** - Item Drawer: Right-side Sheet drawer opens on item click with instant card data display and progressive API detail loading. GET /api/items/[id] with auth, getItemById() query, ItemDrawerProvider context, ClickableItem wrapper, action bar (Favorite/Pin/Copy/Edit/Delete). Cached getDemoUserId() for deduplication
+- **2026-03-26** - Item Drawer Edit Mode: Inline edit mode toggled via Edit button. Save/Cancel replace action bar. Editable: title, description, tags (all types), content (snippet/prompt/command/note), language (snippet/command), URL (link). Zod validation in updateItem server action, updateItem DB query with tag disconnect/reconnect, toast feedback, router.refresh(). Unit tests for validation schema
