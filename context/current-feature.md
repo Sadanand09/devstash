@@ -1,18 +1,26 @@
-# Current Feature
+# Current Feature — Item Delete
 
-<!-- Feature name and short description -->
+Delete functionality for items with confirmation dialog and success feedback.
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+- Add delete confirmation using ShadCN AlertDialog component
+- Call a server action to delete the item from the database
+- Show a toast on successful deletion
+- Close the item drawer after deletion
+- Remove the deleted item from the UI (router.refresh)
 
 ## Notes
 
-<!-- Any extra notes -->
+- Reuse the existing Delete button in the item drawer action bar
+- Use ShadCN AlertDialog for the confirmation step
+- Use existing toast system for success/error feedback
+- Add a deleteItem server action with auth check
+- Add a deleteItem DB query in src/lib/db/items.ts
 
 ## History
 

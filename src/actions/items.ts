@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
-import { updateItem as updateItemQuery } from "@/lib/db/items";
+import { updateItem as updateItemQuery, deleteItem as deleteItemQuery } from "@/lib/db/items";
 import { updateItemSchema } from "@/lib/validations/items";
 
 export type { UpdateItemInput } from "@/lib/validations/items";
@@ -38,5 +38,19 @@ export async function updateItem(
     return { success: true as const, data: item };
   } catch {
     return { success: false as const, error: "Failed to update item" };
+  }
+}
+
+export async function deleteItem(itemId: string) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { success: false as const, error: "Unauthorized" };
+  }
+
+  try {
+    await deleteItemQuery(itemId, session.user.id);
+    return { success: true as const };
+  } catch {
+    return { success: false as const, error: "Failed to delete item" };
   }
 }

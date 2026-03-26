@@ -139,6 +139,17 @@ export async function updateItem(
   });
 }
 
+export async function deleteItem(id: string, userId: string) {
+  // Verify ownership before deleting
+  const existing = await prisma.item.findFirst({
+    where: { id, userId },
+    select: { id: true },
+  });
+  if (!existing) throw new Error("Item not found");
+
+  return prisma.item.delete({ where: { id } });
+}
+
 export async function getStats() {
   const userId = await getDemoUserId();
   if (!userId) {

@@ -23,9 +23,19 @@ import {
   SheetContent,
   SheetTitle,
 } from "@/components/ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { iconMap } from "@/lib/icon-map";
 import { useItemDrawer } from "@/components/dashboard/ItemDrawerProvider";
-import { updateItem } from "@/actions/items";
+import { updateItem, deleteItem } from "@/actions/items";
 import { toast } from "sonner";
 
 type ItemDetail = {
@@ -80,6 +90,8 @@ export function ItemDrawer() {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [form, setForm] = useState<EditFormState>({
     title: "",
     description: "",
@@ -170,6 +182,23 @@ export function ItemDrawer() {
       collections: item.collections,
     });
 
+    router.refresh();
+  }
+
+  async function handleDelete() {
+    if (!selectedItemId) return;
+    setDeleting(true);
+    const result = await deleteItem(selectedItemId);
+    setDeleting(false);
+    setDeleteOpen(false);
+
+    if (!result.success) {
+      toast.error(result.error ?? "Failed to delete item");
+      return;
+    }
+
+    toast.success("Item deleted");
+    close();
     router.refresh();
   }
 
@@ -282,9 +311,31 @@ export function ItemDrawer() {
                   variant="ghost"
                   size="sm"
                   className="gap-1.5 text-destructive hover:text-destructive"
+                  disabled={deleting}
+                  onClick={() => setDeleteOpen(true)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
+                <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete item</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will permanently delete &quot;{cardData.title}&quot;. This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleDelete}
+                        disabled={deleting}
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      >
+                        {deleting ? "Deleting..." : "Delete"}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             )}
 
