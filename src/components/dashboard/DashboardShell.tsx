@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Search, Plus, PanelLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -47,10 +48,12 @@ function DashboardContent({
             <PanelLeft className="h-4 w-4" />
           </Button>
 
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">
-            D
-          </div>
-          <span className="text-lg font-semibold">DevStash</span>
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">
+              D
+            </div>
+            <span className="text-lg font-semibold">DevStash</span>
+          </Link>
         </div>
 
         <div className="relative hidden w-full max-w-md sm:block">
