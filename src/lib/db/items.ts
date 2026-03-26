@@ -90,6 +90,55 @@ export async function getItemById(id: string, userId: string) {
   });
 }
 
+export type UpdateItemData = {
+  title: string;
+  description: string | null;
+  content: string | null;
+  url: string | null;
+  language: string | null;
+  tags: string[];
+};
+
+export async function updateItem(
+  id: string,
+  userId: string,
+  data: UpdateItemData
+) {
+  // Verify ownership before updating
+  const existing = await prisma.item.findFirst({
+    where: { id, userId },
+    select: { id: true },
+  });
+  if (!existing) throw new Error("Item not found");
+
+  return prisma.item.update({
+    where: { id },
+    data: {
+      title: data.title,
+      description: data.description,
+      content: data.content,
+      url: data.url,
+      language: data.language,
+      tags: {
+        set: [],
+        connectOrCreate: data.tags.map((name) => ({
+          where: { name_userId: { name, userId } },
+          create: { name, userId },
+        })),
+      },
+    },
+    include: {
+      itemType: true,
+      tags: true,
+      collections: {
+        include: {
+          collection: { select: { id: true, name: true } },
+        },
+      },
+    },
+  });
+}
+
 export async function getStats() {
   const userId = await getDemoUserId();
   if (!userId) {
