@@ -1,27 +1,14 @@
-# Current Feature: Code Editor
+# Current Feature
 
-Monaco Editor component for snippets and commands with copy button and macOS window styling.
+None
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Create CodeEditor component using Monaco Editor with dark theme
-- Replace Textarea with CodeEditor for snippets and commands only
-- Keep Textarea for notes, prompts, and other non-code types
-- Add macOS-style window dots (red/yellow/green) at top of editor
-- Add quick copy button in editor header
-- Add language label in editor header next to copy
-- Support both display (readonly) and edit modes
-- Fluid editor height with max 400px and themed scrollbar
-
 ## Notes
-
-- Monaco Editor integration (likely @monaco-editor/react)
-- Only applies to snippet and command item types — all others keep Textarea
-- Used in both the item drawer (display + edit) and create dialog
 
 ## History
 
@@ -51,3 +38,4 @@ In Progress
 - **2026-03-26** - Item Drawer Edit Mode: Inline edit mode toggled via Edit button. Save/Cancel replace action bar. Editable: title, description, tags (all types), content (snippet/prompt/command/note), language (snippet/command), URL (link). Zod validation in updateItem server action, updateItem DB query with tag disconnect/reconnect, toast feedback, router.refresh(). Unit tests for validation schema
 - **2026-03-26** - Item Delete: Delete button in item drawer with ShadCN AlertDialog confirmation, deleteItem server action with auth check, deleteItem DB query with ownership verification, toast on success, drawer close and UI refresh after deletion
 - **2026-03-26** - Item Create: ShadCN Dialog modal from "New Item" button with type selector (snippet, prompt, command, note, link), dynamic fields per type, createItemSchema Zod validation, createItem server action and DB query with connectOrCreate tags, toast feedback, unit tests
+- **2026-03-26** - Code Editor: Monaco Editor component with macOS window dots, copy button, language label, dark theme, fluid height (max 400px). Replaces Textarea for snippet/command types in item drawer (display + edit) and create dialog. Type-specific "New" button on items/[type] pages with preselected type in create dialog
