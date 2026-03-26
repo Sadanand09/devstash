@@ -1,26 +1,18 @@
-# Current Feature — Item Delete
+# Current Feature
 
-Delete functionality for items with confirmation dialog and success feedback.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Add delete confirmation using ShadCN AlertDialog component
-- Call a server action to delete the item from the database
-- Show a toast on successful deletion
-- Close the item drawer after deletion
-- Remove the deleted item from the UI (router.refresh)
+<!-- Goals and requirements -->
 
 ## Notes
 
-- Reuse the existing Delete button in the item drawer action bar
-- Use ShadCN AlertDialog for the confirmation step
-- Use existing toast system for success/error feedback
-- Add a deleteItem server action with auth check
-- Add a deleteItem DB query in src/lib/db/items.ts
+<!-- Any extra notes -->
 
 ## History
 
@@ -48,3 +40,4 @@ In Progress
 - **2026-03-26** - Vitest Setup + Items Grid Layout: Vitest configured for server-side unit testing (node env, src/lib/**/*.test.ts), npm run test/test:watch scripts, smoke test for cn(). Items grid updated to 3-column on large screens (1 col mobile, 2 col md, 3 col lg)
 - **2026-03-26** - Item Drawer: Right-side Sheet drawer opens on item click with instant card data display and progressive API detail loading. GET /api/items/[id] with auth, getItemById() query, ItemDrawerProvider context, ClickableItem wrapper, action bar (Favorite/Pin/Copy/Edit/Delete). Cached getDemoUserId() for deduplication
 - **2026-03-26** - Item Drawer Edit Mode: Inline edit mode toggled via Edit button. Save/Cancel replace action bar. Editable: title, description, tags (all types), content (snippet/prompt/command/note), language (snippet/command), URL (link). Zod validation in updateItem server action, updateItem DB query with tag disconnect/reconnect, toast feedback, router.refresh(). Unit tests for validation schema
+- **2026-03-26** - Item Delete: Delete button in item drawer with ShadCN AlertDialog confirmation, deleteItem server action with auth check, deleteItem DB query with ownership verification, toast on success, drawer close and UI refresh after deletion
