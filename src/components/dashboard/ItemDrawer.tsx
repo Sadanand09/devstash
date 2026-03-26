@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { CodeEditor } from "@/components/ui/code-editor";
 import { Label } from "@/components/ui/label";
 import {
   Sheet,
@@ -372,16 +373,26 @@ export function ItemDrawer() {
                   {/* Content — snippet, prompt, command, note */}
                   {CONTENT_TYPES.includes(typeName) && (
                     <div>
-                      <Label htmlFor="edit-content" className="text-sm font-medium text-muted-foreground">
+                      <Label className="text-sm font-medium text-muted-foreground">
                         Content
                       </Label>
-                      <Textarea
-                        id="edit-content"
-                        value={form.content}
-                        onChange={(e) => setForm({ ...form, content: e.target.value })}
-                        className="mt-1 font-mono text-sm"
-                        rows={8}
-                      />
+                      {LANGUAGE_TYPES.includes(typeName) ? (
+                        <div className="mt-1">
+                          <CodeEditor
+                            value={form.content}
+                            onChange={(v) => setForm({ ...form, content: v })}
+                            language={form.language || "plaintext"}
+                          />
+                        </div>
+                      ) : (
+                        <Textarea
+                          id="edit-content"
+                          value={form.content}
+                          onChange={(e) => setForm({ ...form, content: e.target.value })}
+                          className="mt-1 font-mono text-sm"
+                          rows={8}
+                        />
+                      )}
                     </div>
                   )}
 
@@ -462,9 +473,17 @@ export function ItemDrawer() {
                       <h3 className="mb-2 text-sm font-medium text-muted-foreground">
                         Content
                       </h3>
-                      <pre className="overflow-x-auto rounded-lg bg-muted/50 p-4 text-sm">
-                        <code>{detail.content}</code>
-                      </pre>
+                      {LANGUAGE_TYPES.includes(typeName) ? (
+                        <CodeEditor
+                          value={detail.content}
+                          language={detail.language || "plaintext"}
+                          readOnly
+                        />
+                      ) : (
+                        <pre className="overflow-x-auto rounded-lg bg-muted/50 p-4 text-sm">
+                          <code>{detail.content}</code>
+                        </pre>
+                      )}
                     </div>
                   )}
 

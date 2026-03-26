@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getItemsByType } from "@/lib/db/items";
 import { ItemCard } from "@/components/dashboard/ItemCard";
+import { ItemTypeHeader } from "@/components/dashboard/ItemTypeHeader";
 
 const TYPE_LABELS: Record<string, string> = {
   snippet: "Snippets",
@@ -26,7 +27,7 @@ export default async function ItemsPage({
 
   return (
     <div className="p-6">
-      <h1 className="mb-6 text-2xl font-bold">{label}</h1>
+      <ItemTypeHeader label={label} typeName={type} />
 
       {items.length === 0 ? (
         <p className="text-sm text-muted-foreground">

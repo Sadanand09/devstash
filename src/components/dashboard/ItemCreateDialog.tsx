@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { CodeEditor } from "@/components/ui/code-editor";
 import { Label } from "@/components/ui/label";
 import { createItem } from "@/actions/items";
 import { toast } from "sonner";
@@ -33,12 +34,13 @@ const URL_TYPES = ["link"];
 type ItemCreateDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialType?: string;
 };
 
-export function ItemCreateDialog({ open, onOpenChange }: ItemCreateDialogProps) {
+export function ItemCreateDialog({ open, onOpenChange, initialType = "" }: ItemCreateDialogProps) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [typeName, setTypeName] = useState<string>("");
+  const [typeName, setTypeName] = useState<string>(initialType);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
@@ -47,7 +49,7 @@ export function ItemCreateDialog({ open, onOpenChange }: ItemCreateDialogProps) 
   const [tags, setTags] = useState("");
 
   function reset() {
-    setTypeName("");
+    setTypeName(initialType);
     setTitle("");
     setDescription("");
     setContent("");
@@ -174,25 +176,31 @@ export function ItemCreateDialog({ open, onOpenChange }: ItemCreateDialogProps) 
             {/* Content — snippet, prompt, command, note */}
             {CONTENT_TYPES.includes(typeName) && (
               <div>
-                <Label htmlFor="create-content" className="text-sm font-medium text-muted-foreground">
+                <Label className="text-sm font-medium text-muted-foreground">
                   Content
                 </Label>
-                <Textarea
-                  id="create-content"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  className="mt-1 font-mono text-sm"
-                  rows={6}
-                  placeholder={
-                    typeName === "snippet"
-                      ? "Paste your code..."
-                      : typeName === "command"
-                        ? "Enter command..."
-                        : typeName === "prompt"
-                          ? "Write your prompt..."
-                          : "Write your note..."
-                  }
-                />
+                {LANGUAGE_TYPES.includes(typeName) ? (
+                  <div className="mt-1">
+                    <CodeEditor
+                      value={content}
+                      onChange={(v) => setContent(v)}
+                      language={language || "plaintext"}
+                    />
+                  </div>
+                ) : (
+                  <Textarea
+                    id="create-content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    className="mt-1 font-mono text-sm"
+                    rows={6}
+                    placeholder={
+                      typeName === "prompt"
+                        ? "Write your prompt..."
+                        : "Write your note..."
+                    }
+                  />
+                )}
               </div>
             )}
 
