@@ -1,18 +1,24 @@
-# Current Feature
+# Current Feature: Fix GitHub OAuth Redirect Issue
 
-<!-- Feature name and short description -->
+GitHub sign-in requires two clicks — first click authenticates but redirect to /dashboard fails, page refreshes to /sign-in. Second click works.
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+- Switch GitHub OAuth from client-side `signIn` (next-auth/react) to server-side `signIn` (@/auth) via Server Action
+- Create `src/actions/auth.ts` with `signInWithGitHub` server action
+- Update `src/components/auth/sign-in-form.tsx` to use form action instead of onClick
+- GitHub sign-in should work in a single click with reliable redirect to /dashboard
 
 ## Notes
 
-<!-- Any extra notes -->
+- Root cause: client-side `signIn` from `next-auth/react` has unreliable redirect behavior
+- Use `redirectTo` (NextAuth v5), not `callbackUrl` (v4)
+- Keep credentials login as-is (uses `redirect: false`, works fine)
+- Server action handles redirect server-side, avoiding client-side timing issues
 
 ## History
 

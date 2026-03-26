@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export const proxy = auth((req) => {
   if (!req.auth) {
-    const signInUrl = new URL("/api/auth/signin", req.nextUrl.origin);
+    const signInUrl = new URL("/sign-in", req.nextUrl.origin);
     signInUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
     return NextResponse.redirect(signInUrl);
   }
