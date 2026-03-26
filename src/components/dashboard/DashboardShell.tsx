@@ -11,6 +11,8 @@ import {
 import { SidebarProvider, useSidebar } from "@/components/dashboard/SidebarProvider";
 import { Sidebar, MobileSidebarContent } from "@/components/dashboard/Sidebar";
 import type { SidebarData } from "@/components/dashboard/Sidebar";
+import { ItemDrawerProvider } from "@/components/dashboard/ItemDrawerProvider";
+import { ItemDrawer } from "@/components/dashboard/ItemDrawer";
 
 export type SessionUser = {
   name: string | null;
@@ -102,9 +104,12 @@ export function DashboardShell({
 }) {
   return (
     <SidebarProvider>
-      <DashboardContent sidebarData={sidebarData} user={user}>
-        {children}
-      </DashboardContent>
+      <ItemDrawerProvider>
+        <DashboardContent sidebarData={sidebarData} user={user}>
+          {children}
+        </DashboardContent>
+        <ItemDrawer />
+      </ItemDrawerProvider>
     </SidebarProvider>
   );
 }

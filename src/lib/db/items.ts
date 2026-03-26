@@ -75,6 +75,21 @@ export async function getItemsByType(typeName: string) {
   });
 }
 
+export async function getItemById(id: string, userId: string) {
+  return prisma.item.findFirst({
+    where: { id, userId },
+    include: {
+      itemType: true,
+      tags: true,
+      collections: {
+        include: {
+          collection: { select: { id: true, name: true } },
+        },
+      },
+    },
+  });
+}
+
 export async function getStats() {
   const userId = await getDemoUserId();
   if (!userId) {

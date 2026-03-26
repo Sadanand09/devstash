@@ -2,6 +2,7 @@ import { Pin, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { iconMap } from "@/lib/icon-map";
 import { getPinnedItems } from "@/lib/db/items";
+import { ClickableItem } from "@/components/dashboard/ClickableItem";
 
 export async function PinnedItems() {
   const pinnedItems = await getPinnedItems();
@@ -25,8 +26,8 @@ export async function PinnedItems() {
           });
 
           return (
+            <ClickableItem key={item.id} item={item}>
             <div
-              key={item.id}
               className="flex items-center gap-4 rounded-xl border border-border p-4 transition-colors hover:border-muted-foreground/30"
               style={{
                 borderLeftWidth: "3px",
@@ -71,6 +72,7 @@ export async function PinnedItems() {
                 {date}
               </span>
             </div>
+            </ClickableItem>
           );
         })}
       </div>

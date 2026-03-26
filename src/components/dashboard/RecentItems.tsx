@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { iconMap } from "@/lib/icon-map";
 import { getRecentItems } from "@/lib/db/items";
+import { ClickableItem } from "@/components/dashboard/ClickableItem";
 
 export async function RecentItems() {
   const recentItems = await getRecentItems(10);
@@ -20,8 +21,8 @@ export async function RecentItems() {
           });
 
           return (
+            <ClickableItem key={item.id} item={item}>
             <div
-              key={item.id}
               className="flex items-center gap-4 rounded-lg border border-border px-4 py-3 transition-colors hover:border-muted-foreground/30"
               style={{
                 borderLeftWidth: "3px",
@@ -72,6 +73,7 @@ export async function RecentItems() {
                 {date}
               </span>
             </div>
+            </ClickableItem>
           );
         })}
       </div>

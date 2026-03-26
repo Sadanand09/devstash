@@ -1,6 +1,7 @@
 import { Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { iconMap } from "@/lib/icon-map";
+import { ClickableItem } from "@/components/dashboard/ClickableItem";
 
 type ItemCardProps = {
   item: {
@@ -28,6 +29,7 @@ export function ItemCard({ item }: ItemCardProps) {
   });
 
   return (
+    <ClickableItem item={item}>
     <div
       className="flex items-center gap-4 rounded-lg border border-border px-4 py-3 transition-colors hover:border-muted-foreground/30"
       style={{
@@ -79,5 +81,6 @@ export function ItemCard({ item }: ItemCardProps) {
         {date}
       </span>
     </div>
+    </ClickableItem>
   );
 }
