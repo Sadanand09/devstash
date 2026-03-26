@@ -1,24 +1,18 @@
-# Current Feature: Fix GitHub OAuth Redirect Issue
+# Current Feature
 
-GitHub sign-in requires two clicks — first click authenticates but redirect to /dashboard fails, page refreshes to /sign-in. Second click works.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Switch GitHub OAuth from client-side `signIn` (next-auth/react) to server-side `signIn` (@/auth) via Server Action
-- Create `src/actions/auth.ts` with `signInWithGitHub` server action
-- Update `src/components/auth/sign-in-form.tsx` to use form action instead of onClick
-- GitHub sign-in should work in a single click with reliable redirect to /dashboard
+<!-- Goals and requirements -->
 
 ## Notes
 
-- Root cause: client-side `signIn` from `next-auth/react` has unreliable redirect behavior
-- Use `redirectTo` (NextAuth v5), not `callbackUrl` (v4)
-- Keep credentials login as-is (uses `redirect: false`, works fine)
-- Server action handles redirect server-side, avoiding client-side timing issues
+<!-- Any extra notes -->
 
 ## History
 
@@ -41,3 +35,4 @@ In Progress
 - **2026-03-25** - Forgot Password: Password reset flow with /forgot-password and /reset-password pages, reuses VerificationToken model, 1-hour token expiry, Resend email, email enumeration prevention, credentials-only users
 - **2026-03-25** - Profile Page: /profile route with account info (avatar, email, auth method, join date), usage stats with item type breakdown, change password for credentials users, delete account with typed confirmation dialog, profile icon in sidebar dropdown
 - **2026-03-25** - Rate Limiting: Upstash Redis rate limiting on auth endpoints (login, register, forgot-password, reset-password, resend-verification) with sliding window algorithm, reusable utility, 429 responses with Retry-After headers, fail-open on Redis errors
+- **2026-03-26** - GitHub OAuth Fix: Server-side signIn via Server Action, proxy redirect to /sign-in, allowDangerousEmailAccountLinking for GitHub provider
