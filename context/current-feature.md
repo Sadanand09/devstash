@@ -1,25 +1,18 @@
-# Current Feature: Items List View
+# Current Feature
 
-Dynamic items listing page at `/items/[type]` that displays type-filtered items.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Create dynamic route `/items/[type]` (e.g., /items/snippets, /items/notes)
-- Fetch and display items filtered by type
-- Responsive grid of ItemCard components
-- Two columns on medium and up
-- Each card has left border colored by item type
-- Follow existing codebase patterns
+<!-- Goals and requirements -->
 
 ## Notes
 
-- Route: `/items/[type]` with dynamic `[type]` param matching item type slugs
-- Uses existing ItemCard pattern and type color system
-- Server component with database query filtered by type
+<!-- Any extra notes -->
 
 ## History
 
@@ -43,3 +36,4 @@ In Progress
 - **2026-03-25** - Profile Page: /profile route with account info (avatar, email, auth method, join date), usage stats with item type breakdown, change password for credentials users, delete account with typed confirmation dialog, profile icon in sidebar dropdown
 - **2026-03-25** - Rate Limiting: Upstash Redis rate limiting on auth endpoints (login, register, forgot-password, reset-password, resend-verification) with sliding window algorithm, reusable utility, 429 responses with Retry-After headers, fail-open on Redis errors
 - **2026-03-26** - GitHub OAuth Fix: Server-side signIn via Server Action, proxy redirect to /sign-in, allowDangerousEmailAccountLinking for GitHub provider
+- **2026-03-26** - Items List View: Dynamic /items/[type] route with type-filtered items in responsive two-column grid, reusable ItemCard component, getItemsByType() DB query, shared dashboard layout with sidebar
