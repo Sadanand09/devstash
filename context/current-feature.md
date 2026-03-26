@@ -1,30 +1,14 @@
-# Current Feature — Item Create
+# Current Feature
 
-Add new items via a modal dialog from the "New Item" button in the top bar.
+None
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- ShadCN Dialog modal opened from "New Item" button in top bar
-- Type selector for: snippet, prompt, command, note, link
-- Dynamic fields based on selected type:
-  - All types: title (required), description, tags
-  - snippet/command: content, language
-  - prompt/note: content
-  - link: URL (required)
-- `createItem` server action with Zod validation
-- `createItem` query in `src/lib/db/items.ts`
-- Toast on success, close modal, and refresh UI
-
 ## Notes
-
-- Reuse existing patterns from updateItem server action and validation
-- The "New Item" button (Plus icon) already exists in DashboardShell top bar but is non-functional
-- Need to look up item type IDs by name when creating
-- Tags should use connectOrCreate like the update flow
 
 ## History
 
@@ -53,3 +37,4 @@ In Progress
 - **2026-03-26** - Item Drawer: Right-side Sheet drawer opens on item click with instant card data display and progressive API detail loading. GET /api/items/[id] with auth, getItemById() query, ItemDrawerProvider context, ClickableItem wrapper, action bar (Favorite/Pin/Copy/Edit/Delete). Cached getDemoUserId() for deduplication
 - **2026-03-26** - Item Drawer Edit Mode: Inline edit mode toggled via Edit button. Save/Cancel replace action bar. Editable: title, description, tags (all types), content (snippet/prompt/command/note), language (snippet/command), URL (link). Zod validation in updateItem server action, updateItem DB query with tag disconnect/reconnect, toast feedback, router.refresh(). Unit tests for validation schema
 - **2026-03-26** - Item Delete: Delete button in item drawer with ShadCN AlertDialog confirmation, deleteItem server action with auth check, deleteItem DB query with ownership verification, toast on success, drawer close and UI refresh after deletion
+- **2026-03-26** - Item Create: ShadCN Dialog modal from "New Item" button with type selector (snippet, prompt, command, note, link), dynamic fields per type, createItemSchema Zod validation, createItem server action and DB query with connectOrCreate tags, toast feedback, unit tests
