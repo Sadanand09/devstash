@@ -1,25 +1,18 @@
 # Current Feature
 
-Vitest Setup + Items Grid Layout — Set up Vitest for unit testing and update items list view to 3-column layout on large screens.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- ~~Install Vitest with TypeScript support~~
-- ~~Configure vitest.config.ts for the project (path aliases, environment)~~
-- ~~Add `npm run test` script~~
-- ~~Scope testing to `src/lib/**` (server actions and utilities only)~~
-- ~~Update workflow docs to reflect test setup~~
-- Change items list view from 2-column to 3-column grid on large screens
-- Keep 2 columns on medium screens, 1 column on mobile
+<!-- Goals and requirements -->
 
 ## Notes
 
-- No component testing — only server-side logic
-- Items grid should be responsive: 1 col mobile, 2 col medium, 3 col large
+<!-- Any extra notes -->
 
 ## History
 
@@ -44,3 +37,4 @@ In Progress
 - **2026-03-25** - Rate Limiting: Upstash Redis rate limiting on auth endpoints (login, register, forgot-password, reset-password, resend-verification) with sliding window algorithm, reusable utility, 429 responses with Retry-After headers, fail-open on Redis errors
 - **2026-03-26** - GitHub OAuth Fix: Server-side signIn via Server Action, proxy redirect to /sign-in, allowDangerousEmailAccountLinking for GitHub provider
 - **2026-03-26** - Items List View: Dynamic /items/[type] route with type-filtered items in responsive two-column grid, reusable ItemCard component, getItemsByType() DB query, shared dashboard layout with sidebar
+- **2026-03-26** - Vitest Setup + Items Grid Layout: Vitest configured for server-side unit testing (node env, src/lib/**/*.test.ts), npm run test/test:watch scripts, smoke test for cn(). Items grid updated to 3-column on large screens (1 col mobile, 2 col md, 3 col lg)
