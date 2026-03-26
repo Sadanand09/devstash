@@ -1,18 +1,30 @@
-# Current Feature
+# Current Feature — Item Create
 
-<!-- Feature name and short description -->
+Add new items via a modal dialog from the "New Item" button in the top bar.
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+- ShadCN Dialog modal opened from "New Item" button in top bar
+- Type selector for: snippet, prompt, command, note, link
+- Dynamic fields based on selected type:
+  - All types: title (required), description, tags
+  - snippet/command: content, language
+  - prompt/note: content
+  - link: URL (required)
+- `createItem` server action with Zod validation
+- `createItem` query in `src/lib/db/items.ts`
+- Toast on success, close modal, and refresh UI
 
 ## Notes
 
-<!-- Any extra notes -->
+- Reuse existing patterns from updateItem server action and validation
+- The "New Item" button (Plus icon) already exists in DashboardShell top bar but is non-functional
+- Need to look up item type IDs by name when creating
+- Tags should use connectOrCreate like the update flow
 
 ## History
 

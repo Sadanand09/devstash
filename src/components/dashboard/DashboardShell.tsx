@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Search, Plus, PanelLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ import { Sidebar, MobileSidebarContent } from "@/components/dashboard/Sidebar";
 import type { SidebarData } from "@/components/dashboard/Sidebar";
 import { ItemDrawerProvider } from "@/components/dashboard/ItemDrawerProvider";
 import { ItemDrawer } from "@/components/dashboard/ItemDrawer";
+import { ItemCreateDialog } from "@/components/dashboard/ItemCreateDialog";
 
 export type SessionUser = {
   name: string | null;
@@ -31,6 +33,7 @@ function DashboardContent({
   user: SessionUser;
 }) {
   const { mobileOpen, setMobileOpen } = useSidebar();
+  const [createOpen, setCreateOpen] = useState(false);
 
   return (
     <div className="flex h-screen flex-col bg-background text-foreground">
@@ -66,7 +69,7 @@ function DashboardContent({
             <Plus className="mr-1.5 h-4 w-4" />
             New Collection
           </Button>
-          <Button size="sm">
+          <Button size="sm" onClick={() => setCreateOpen(true)}>
             <Plus className="mr-1.5 h-4 w-4" />
             <span className="hidden sm:inline">New Item</span>
             <span className="sm:hidden">New</span>
@@ -92,6 +95,8 @@ function DashboardContent({
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
+
+      <ItemCreateDialog open={createOpen} onOpenChange={setCreateOpen} />
     </div>
   );
 }

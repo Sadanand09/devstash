@@ -139,6 +139,52 @@ export async function updateItem(
   });
 }
 
+export type CreateItemData = {
+  typeName: string;
+  title: string;
+  description: string | null;
+  content: string | null;
+  url: string | null;
+  language: string | null;
+  tags: string[];
+};
+
+export async function createItem(userId: string, data: CreateItemData) {
+  const itemType = await prisma.itemType.findFirst({
+    where: {
+      name: { equals: data.typeName, mode: "insensitive" },
+      OR: [{ isSystem: true }, { userId }],
+    },
+    select: { id: true },
+  });
+  if (!itemType) throw new Error("Invalid item type");
+
+  const contentType = data.url ? "url" : "text";
+
+  return prisma.item.create({
+    data: {
+      title: data.title,
+      description: data.description,
+      content: data.content,
+      url: data.url,
+      language: data.language,
+      contentType,
+      userId,
+      itemTypeId: itemType.id,
+      tags: {
+        connectOrCreate: data.tags.map((name) => ({
+          where: { name_userId: { name, userId } },
+          create: { name, userId },
+        })),
+      },
+    },
+    include: {
+      itemType: true,
+      tags: true,
+    },
+  });
+}
+
 export async function deleteItem(id: string, userId: string) {
   // Verify ownership before deleting
   const existing = await prisma.item.findFirst({
