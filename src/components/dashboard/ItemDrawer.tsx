@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CodeEditor } from "@/components/ui/code-editor";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
 import { Label } from "@/components/ui/label";
 import {
   Sheet,
@@ -62,6 +63,7 @@ type EditFormState = {
 
 const CONTENT_TYPES = ["snippet", "prompt", "command", "note"];
 const LANGUAGE_TYPES = ["snippet", "command"];
+const MARKDOWN_TYPES = ["note", "prompt"];
 const URL_TYPES = ["link"];
 
 function DetailSkeleton() {
@@ -384,6 +386,18 @@ export function ItemDrawer() {
                             language={form.language || "plaintext"}
                           />
                         </div>
+                      ) : MARKDOWN_TYPES.includes(typeName) ? (
+                        <div className="mt-1">
+                          <MarkdownEditor
+                            value={form.content}
+                            onChange={(v) => setForm({ ...form, content: v })}
+                            placeholder={
+                              typeName === "prompt"
+                                ? "Write your prompt..."
+                                : "Write your note..."
+                            }
+                          />
+                        </div>
                       ) : (
                         <Textarea
                           id="edit-content"
@@ -477,6 +491,11 @@ export function ItemDrawer() {
                         <CodeEditor
                           value={detail.content}
                           language={detail.language || "plaintext"}
+                          readOnly
+                        />
+                      ) : MARKDOWN_TYPES.includes(typeName) ? (
+                        <MarkdownEditor
+                          value={detail.content}
                           readOnly
                         />
                       ) : (

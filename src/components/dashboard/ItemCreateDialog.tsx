@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CodeEditor } from "@/components/ui/code-editor";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
 import { Label } from "@/components/ui/label";
 import { createItem } from "@/actions/items";
 import { toast } from "sonner";
@@ -188,18 +189,17 @@ export function ItemCreateDialog({ open, onOpenChange, initialType = "" }: ItemC
                     />
                   </div>
                 ) : (
-                  <Textarea
-                    id="create-content"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    className="mt-1 font-mono text-sm"
-                    rows={6}
-                    placeholder={
-                      typeName === "prompt"
-                        ? "Write your prompt..."
-                        : "Write your note..."
-                    }
-                  />
+                  <div className="mt-1">
+                    <MarkdownEditor
+                      value={content}
+                      onChange={(v) => setContent(v)}
+                      placeholder={
+                        typeName === "prompt"
+                          ? "Write your prompt..."
+                          : "Write your note..."
+                      }
+                    />
+                  </div>
                 )}
               </div>
             )}
