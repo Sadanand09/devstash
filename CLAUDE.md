@@ -32,6 +32,8 @@ Read these for full project context:
 ## Quick Commands
 
 ```bash
-npm run dev      # Start dev server
-npm run build    # Build for production
-npm run lint     # Run ESLint
+npm run dev        # Start dev server
+npm run build      # Build for production
+npm run lint       # Run ESLint
+npm run test       # Run unit tests (Vitest)
+npm run test:watch # Run tests in watch mode

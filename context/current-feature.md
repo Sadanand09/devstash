@@ -1,18 +1,25 @@
 # Current Feature
 
-<!-- Feature name and short description -->
+Vitest Setup + Items Grid Layout — Set up Vitest for unit testing and update items list view to 3-column layout on large screens.
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-<!-- Goals and requirements -->
+- ~~Install Vitest with TypeScript support~~
+- ~~Configure vitest.config.ts for the project (path aliases, environment)~~
+- ~~Add `npm run test` script~~
+- ~~Scope testing to `src/lib/**` (server actions and utilities only)~~
+- ~~Update workflow docs to reflect test setup~~
+- Change items list view from 2-column to 3-column grid on large screens
+- Keep 2 columns on medium screens, 1 column on mobile
 
 ## Notes
 
-<!-- Any extra notes -->
+- No component testing — only server-side logic
+- Items grid should be responsive: 1 col mobile, 2 col medium, 3 col large
 
 ## History
 
