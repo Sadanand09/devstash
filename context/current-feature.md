@@ -1,26 +1,14 @@
-# Current Feature: Markdown Editor
+# Current Feature
+
+None
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Create MarkdownEditor component with Write/Preview tabs
-- Replace Textarea with MarkdownEditor for notes and prompts only (keep CodeEditor for snippets/commands)
-- Use react-markdown + remark-gfm for GitHub Flavored Markdown
-- Match existing dark theme styling (bg-[#1e1e1e] container, bg-[#2d2d2d] header)
-- Copy button in header (same style as CodeEditor)
-- Support display (readonly) and edit modes — readonly shows Preview only, edit defaults to Write
-- Proper markdown styling: headings, code blocks, inline code, lists, blockquotes, links, tables
-- Custom CSS class (.markdown-preview) for dark mode styling
-- Fluid height with max 400px, matching CodeEditor
-
 ## Notes
-
-- Integration points: NewItemDialog (note/prompt content), ItemDrawer edit mode (note/prompt content), ItemDrawer view mode (readonly for note/prompt)
-- No changes to CodeEditor or snippet/command types
-- Use remark-gfm for GitHub Flavored Markdown support
 
 ## History
 
@@ -51,3 +39,4 @@ In Progress
 - **2026-03-26** - Item Delete: Delete button in item drawer with ShadCN AlertDialog confirmation, deleteItem server action with auth check, deleteItem DB query with ownership verification, toast on success, drawer close and UI refresh after deletion
 - **2026-03-26** - Item Create: ShadCN Dialog modal from "New Item" button with type selector (snippet, prompt, command, note, link), dynamic fields per type, createItemSchema Zod validation, createItem server action and DB query with connectOrCreate tags, toast feedback, unit tests
 - **2026-03-26** - Code Editor: Monaco Editor component with macOS window dots, copy button, language label, dark theme, fluid height (max 400px). Replaces Textarea for snippet/command types in item drawer (display + edit) and create dialog. Type-specific "New" button on items/[type] pages with preselected type in create dialog
+- **2026-03-27** - Markdown Editor: MarkdownEditor component with Write/Preview tabs, react-markdown + remark-gfm, dark theme matching CodeEditor, copy button, fluid height (max 400px). Replaces Textarea for note/prompt types in ItemDrawer (view + edit) and ItemCreateDialog. Custom .markdown-preview CSS for headings, code blocks, lists, blockquotes, links, tables
